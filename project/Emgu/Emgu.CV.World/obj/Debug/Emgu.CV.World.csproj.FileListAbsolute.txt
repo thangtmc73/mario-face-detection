@@ -1,0 +1,20 @@
+C:\Emgu\emgucv-windesktop 3.1.0.2282\bin\Emgu.CV.World.XML
+C:\Emgu\emgucv-windesktop 3.1.0.2282\bin\Emgu.CV.World.dll
+C:\Emgu\emgucv-windesktop 3.1.0.2282\bin\Emgu.CV.World.pdb
+C:\Emgu\emgucv-windesktop 3.1.0.2282\Emgu.CV.World\obj\Debug\Emgu.CV.World.csprojResolveAssemblyReference.cache
+C:\Emgu\emgucv-windesktop 3.1.0.2282\Emgu.CV.World\obj\Debug\Emgu.CV.World.dll
+C:\Emgu\emgucv-windesktop 3.1.0.2282\Emgu.CV.World\obj\Debug\Emgu.CV.World.pdb
+D:\14521173 - deadline\NMCNPM\Bai1\KinhChieuYeu-WinForm\Emgu.CV.World\obj\Debug\Emgu.CV.World.csprojResolveAssemblyReference.cache
+D:\14521173 - deadline\NMCNPM\Bai1\KinhChieuYeu-WinForm\Emgu.CV.World\obj\Debug\Emgu.CV.World.dll
+D:\14521173 - deadline\NMCNPM\Bai1\KinhChieuYeu-WinForm\Emgu.CV.World\obj\Debug\Emgu.CV.World.pdb
+D:\14521173 - deadline\NMCNPM\Bai1\KinhChieuYeu-WinForm\bin\Emgu.CV.World.XML
+D:\14521173 - deadline\NMCNPM\Bai1\KinhChieuYeu-WinForm\bin\Emgu.CV.World.dll
+D:\14521173 - deadline\NMCNPM\Bai1\KinhChieuYeu-WinForm\bin\Emgu.CV.World.pdb
+D:\14521173 - deadline\NMCNPM\Bai1\bin\Emgu.CV.World.dll
+D:\14521173 - deadline\NMCNPM\Bai1\bin\Emgu.CV.World.pdb
+D:\14521173 - deadline\NMCNPM\Bai1\bin\Emgu.CV.World.XML
+D:\projects\MarioFaceDetection\bin\Emgu.CV.World.XML
+D:\projects\MarioFaceDetection\bin\Emgu.CV.World.dll
+D:\projects\MarioFaceDetection\bin\Emgu.CV.World.pdb
+D:\projects\MarioFaceDetection\project\Emgu\Emgu.CV.World\obj\Debug\Emgu.CV.World.dll
+D:\projects\MarioFaceDetection\project\Emgu\Emgu.CV.World\obj\Debug\Emgu.CV.World.pdb
