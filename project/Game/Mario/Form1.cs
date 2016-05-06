@@ -12,9 +12,15 @@ namespace Mario
 {
 	public partial class Form1 : Form
 	{
+		private Monster monster1;
 		public Form1()
 		{
 			InitializeComponent();
+		}
+
+		private void timer1_Tick(object sender, EventArgs e)
+		{
+
 		}
 	}
 }
