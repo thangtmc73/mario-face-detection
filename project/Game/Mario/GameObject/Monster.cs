@@ -6,24 +6,13 @@ using System.Threading.Tasks;
 
 namespace Mario
 {
-	class Monster
+	class Monster : GameObject
 	{
 		public Monster(string a_name, System.Drawing.Point a_pos)
 		{
 			_pos = a_pos;
 			_state = 0;
 			_name = a_name;
-		}
-		public string Name
-		{
-			get
-			{
-				return _name;
-			}
-			set
-			{
-				_name = value;
-			}
 		}
 		public int State
 		{
@@ -50,7 +39,8 @@ namespace Mario
 		}
 		public void updateState()
 		{
-			System.Drawing.Point p = Form1.Instance.getPictureBoxWithName("pic" + _name[0].ToString().ToUpper() + _name.Substring(1)).Location;
+
+			System.Drawing.Point p = MainForm.Instance.getPictureBoxWithName("pic" + _name[0].ToString().ToUpper() + _name.Substring(1)).Location;
 			if (_state == 0 && p.X <= _pos.X - 50)
 			{
 				_state = 1;
@@ -62,10 +52,10 @@ namespace Mario
 				return;
 			}
 		}
-		public void move()
+		public override void Move()
 		{
 			string s = "pic" + _name[0].ToString().ToUpper() + _name.Substring(1);
-			System.Drawing.Point pos = Form1.Instance.getPictureBoxWithName(s).Location;
+			System.Drawing.Point pos = MainForm.Instance.getPictureBoxWithName(s).Location;
 			int x = pos.X;
 			switch (_state)
 			{
@@ -77,14 +67,12 @@ namespace Mario
 					break;
 			}
 			System.Drawing.Point locate = new System.Drawing.Point(x, pos.Y);
-			Form1.Instance.movePictureBox(s, locate);
+			MainForm.Instance.movePictureBox(s, locate);
 		}
 		public void getPostion()
 		{
-			_pos = Form1.Instance.getPictureBoxWithName("pic" + _name[0].ToString().ToUpper() + _name.Substring(1)).Location;
+			_pos = MainForm.Instance.getPictureBoxWithName("pic" + _name[0].ToString().ToUpper() + _name.Substring(1)).Location;
 		}
 		private int _state;
-		private string _name;
-		private System.Drawing.Point _pos;
 	}
 }

@@ -10,16 +10,16 @@ using System.Windows.Forms;
 
 namespace Mario
 {
-	public partial class Form1 : Form
+	public partial class MainForm : Form
 	{
-		private static Form1 _instance;
-		public static Form1 Instance
+		private static MainForm _instance;
+		public static MainForm Instance
 		{
 			get
 			{
 				if (_instance == null)
 				{
-					_instance = new Form1();
+					_instance = new MainForm();
 				}
 				return _instance;
 			}
@@ -34,7 +34,7 @@ namespace Mario
 		{
 			return (System.Windows.Forms.PictureBox)this.Controls.Find(name, true).FirstOrDefault();
 		}
-		private Form1()
+		private MainForm()
 		{
 			InitializeComponent();
 			monster1 = new Monster("monster1", new Point(524, 480));
@@ -44,8 +44,8 @@ namespace Mario
 		private void timer1_Tick(object sender, EventArgs e)
 		{
 			monster1.updateState();
-			monster1.move();
-			pnlScreen.Left -= 50;
+			monster1.Move();
+			//pnlScreen.Left -= 5;
 		}
 	}
 }

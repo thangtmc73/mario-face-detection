@@ -1,6 +1,6 @@
 ﻿namespace Mario
 {
-	partial class Form1
+	partial class MainForm
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -63,7 +63,7 @@
 			this.timer1.Interval = 1;
 			this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
 			// 
-			// Form1
+			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -71,8 +71,8 @@
 			this.Controls.Add(this.pnlScreen);
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
-			this.Name = "Form1";
-			this.Text = "Form1";
+			this.Name = "MainForm";
+			this.Text = "Mario Face Detection";
 			this.pnlScreen.ResumeLayout(false);
 			this.pnlScreen.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picMonster1)).EndInit();
