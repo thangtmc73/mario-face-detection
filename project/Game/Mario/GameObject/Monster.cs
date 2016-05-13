@@ -10,43 +10,25 @@ namespace Mario
 	{
 		public Monster(string a_name, System.Drawing.Point a_pos)
 		{
-			_pos = a_pos;
-			_state = 0;
+			_pic.Image = global::Mario.Properties.Resources.spr_monster;
+			_pic.Location = a_pos;
+			_defaultPos = a_pos;
+			_pic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
 			_name = a_name;
+			_pic.Name = "pic" + a_name[0].ToString().ToUpper() + a_name.Substring(1);
+			_state = 0;
+			Manager.PictureBoxManager.Instance.AddPictureBox(_pic);
 		}
-		public int State
-		{
-			get
-			{
-				return _state;
-			}
-			set
-			{
-				_state = value;
-			}
-		}
-		public void setPositionX(int a_x)
-		{
-			_pos.X = a_x;
-		}
-		public void setPositionY(int a_y)
-		{
-			_pos.Y = a_y;
-		}
-		public int getState()
-		{
-			return _state;
-		}
+		public int State { get; set; }
 		public void updateState()
 		{
-
-			System.Drawing.Point p = MainForm.Instance.getPictureBoxWithName("pic" + _name[0].ToString().ToUpper() + _name.Substring(1)).Location;
-			if (_state == 0 && p.X <= _pos.X - 50)
+			System.Drawing.Point p = Manager.PictureBoxManager.Instance.GetPictureBoxWithName(_pic.Name).Location;
+			if (_state == 0 && p.X <= _defaultPos.X - 100)
 			{
 				_state = 1;
 				return;
 			}
-			if (_state == 1 && p.X >= _pos.X + 50)
+			if (_state == 1 && p.X >= _defaultPos.X + 100)
 			{
 				_state = 0;
 				return;
@@ -54,9 +36,8 @@ namespace Mario
 		}
 		public override void Move()
 		{
-			string s = "pic" + _name[0].ToString().ToUpper() + _name.Substring(1);
-			System.Drawing.Point pos = MainForm.Instance.getPictureBoxWithName(s).Location;
-			int x = pos.X;
+			System.Windows.Forms.PictureBox pic = Manager.PictureBoxManager.Instance.GetPictureBoxWithName(_pic.Name);
+			int x = pic.Location.X;
 			switch (_state)
 			{
 				case 0:
@@ -66,13 +47,9 @@ namespace Mario
 					x = x + 5;
 					break;
 			}
-			System.Drawing.Point locate = new System.Drawing.Point(x, pos.Y);
-			MainForm.Instance.movePictureBox(s, locate);
-		}
-		public void getPostion()
-		{
-			_pos = MainForm.Instance.getPictureBoxWithName("pic" + _name[0].ToString().ToUpper() + _name.Substring(1)).Location;
+			Manager.PictureBoxManager.Instance.GetPictureBoxWithName(_pic.Name).Location = new System.Drawing.Point(x, pic.Location.Y);
 		}
 		private int _state;
+		private System.Drawing.Point _defaultPos;
 	}
 }

@@ -12,32 +12,14 @@ namespace Mario
 {
 	public partial class MainForm : Form
 	{
-		private static MainForm _instance;
-		public static MainForm Instance
-		{
-			get
-			{
-				if (_instance == null)
-				{
-					_instance = new MainForm();
-				}
-				return _instance;
-			}
-		}
-		public void movePictureBox(string a_name, Point a_destination)
-		{
-			this.Controls.Find(a_name, true).FirstOrDefault().Left = a_destination.X;
-		}
-
 		private Monster monster1;
-		public System.Windows.Forms.PictureBox getPictureBoxWithName(string name)
+		public System.Windows.Forms.PictureBox GetPictureBoxWithName(string name)
 		{
 			return (System.Windows.Forms.PictureBox)this.Controls.Find(name, true).FirstOrDefault();
 		}
-		private MainForm()
+		public MainForm()
 		{
 			InitializeComponent();
-			monster1 = new Monster("monster1", new Point(524, 480));
 			timer1.Start();
 		}
 
@@ -45,7 +27,12 @@ namespace Mario
 		{
 			monster1.updateState();
 			monster1.Move();
-			//pnlScreen.Left -= 5;
+		}
+
+		private void MainForm_Load(object sender, EventArgs e)
+		{
+			Manager.PictureBoxManager.Instance.ReplaceForm(this);
+			monster1 = new Monster("monster1", new Point(524, 100));
 		}
 	}
 }

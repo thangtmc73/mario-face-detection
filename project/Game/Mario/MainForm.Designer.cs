@@ -29,33 +29,8 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			this.pnlScreen = new System.Windows.Forms.Panel();
-			this.picMonster1 = new System.Windows.Forms.PictureBox();
 			this.timer1 = new System.Windows.Forms.Timer(this.components);
-			this.pnlScreen.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.picMonster1)).BeginInit();
 			this.SuspendLayout();
-			// 
-			// pnlScreen
-			// 
-			this.pnlScreen.BackgroundImage = global::Mario.Properties.Resources.background;
-			this.pnlScreen.Controls.Add(this.picMonster1);
-			this.pnlScreen.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.pnlScreen.Location = new System.Drawing.Point(0, 0);
-			this.pnlScreen.Name = "pnlScreen";
-			this.pnlScreen.Size = new System.Drawing.Size(1008, 729);
-			this.pnlScreen.TabIndex = 0;
-			// 
-			// picMonster1
-			// 
-			this.picMonster1.BackColor = System.Drawing.Color.Transparent;
-			this.picMonster1.Image = global::Mario.Properties.Resources.spr_monster;
-			this.picMonster1.Location = new System.Drawing.Point(524, 480);
-			this.picMonster1.Name = "picMonster1";
-			this.picMonster1.Size = new System.Drawing.Size(80, 80);
-			this.picMonster1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-			this.picMonster1.TabIndex = 0;
-			this.picMonster1.TabStop = false;
 			// 
 			// timer1
 			// 
@@ -67,24 +42,18 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1008, 729);
-			this.Controls.Add(this.pnlScreen);
+			this.ClientSize = new System.Drawing.Size(1352, 261);
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "MainForm";
 			this.Text = "Mario Face Detection";
-			this.pnlScreen.ResumeLayout(false);
-			this.pnlScreen.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.picMonster1)).EndInit();
+			this.Load += new System.EventHandler(this.MainForm_Load);
 			this.ResumeLayout(false);
 
 		}
 
 		#endregion
-
-		private System.Windows.Forms.Panel pnlScreen;
 		private System.Windows.Forms.Timer timer1;
-		private System.Windows.Forms.PictureBox picMonster1;
 	}
 }
 

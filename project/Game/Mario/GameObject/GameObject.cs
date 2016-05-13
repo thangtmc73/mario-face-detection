@@ -8,6 +8,10 @@ namespace Mario
 {
 	public abstract class GameObject
 	{
+		public GameObject()
+		{
+			_pic = new System.Windows.Forms.PictureBox();
+		}
 		public abstract void Move();
 		public string Name
 		{
@@ -22,6 +26,6 @@ namespace Mario
 		}
 
 		protected string _name;
-		protected System.Drawing.Point _pos;
+		protected System.Windows.Forms.PictureBox _pic;
 	}
 }
