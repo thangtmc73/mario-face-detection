@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mario
+namespace Mario.GameObjects
 {
-	class Mushroom : GameObject
+	class Mushroom : BaseObject
 	{
 		public override void Move() { }
 	}

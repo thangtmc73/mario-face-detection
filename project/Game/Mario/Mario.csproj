@@ -61,17 +61,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GameObject\GameObject.cs" />
-    <Compile Include="GameObject\Mario.cs" />
-    <Compile Include="GameObject\Mushroom.cs" />
+    <Compile Include="Core\Sprite.cs" />
+    <Compile Include="GameObjects\FinalMonster.cs" />
+    <Compile Include="GameObjects\BaseObject.cs" />
+    <Compile Include="GameObjects\Mario.cs" />
+    <Compile Include="GameObjects\Mushroom.cs" />
+    <Compile Include="GameObjects\NormalMonster.cs" />
+    <Compile Include="GameObjects\Thorn .cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="GameObject\Monster.cs" />
-    <Compile Include="Manager\PictureBoxManager.cs" />
+    <Compile Include="GameObjects\Monster.cs" />
+    <Compile Include="Manager\SpriteManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="MainForm.resx">
@@ -111,9 +115,27 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\spr_palace.png" />
+    <None Include="Resources\spr_mushroom.png" />
+    <None Include="Resources\spr_monster1.png" />
+    <None Include="Resources\spr_monster_2.png" />
+    <None Include="Resources\spr__thorn.png" />
+    <None Include="Resources\spr_wall.png" />
+    <None Include="Resources\spr_background.bmp" />
+    <None Include="Resources\spr_fire.png" />
+    <None Include="Resources\spr_mario.png" />
     <None Include="Resources\background.png" />
-  </ItemGroup>
-  <ItemGroup>
+    <None Include="Resources\spr_background.png" />
+    <None Include="Resources\sprBlueMushroom.png" />
+    <None Include="Resources\sprFinalMonster.png" />
+    <None Include="Resources\sprFire.png" />
+    <None Include="Resources\sprMario.png" />
+    <None Include="Resources\sprNormalMonster.png" />
+    <None Include="Resources\sprPalace.png" />
+    <None Include="Resources\sprRedMushroom.png" />
+    <None Include="Resources\sprThorn.png" />
+    <None Include="Resources\sprWall.png" />
+    <None Include="Resources\sprBackground.png" />
     <Content Include="Resources\spr_monster.gif" />
   </ItemGroup>
   <ItemGroup />
