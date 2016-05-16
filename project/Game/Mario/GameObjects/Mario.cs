@@ -8,6 +8,10 @@ namespace Mario.GameObjects
 {
 	class Mario : BaseObject
 	{
+		public Mario(string a_name, System.Drawing.Point a_pos) : base(a_name)
+		{
+
+		}
 		public override void Move()
 		{
 

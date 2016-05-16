@@ -115,17 +115,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\spr_palace.png" />
-    <None Include="Resources\spr_mushroom.png" />
-    <None Include="Resources\spr_monster1.png" />
-    <None Include="Resources\spr_monster_2.png" />
-    <None Include="Resources\spr__thorn.png" />
-    <None Include="Resources\spr_wall.png" />
-    <None Include="Resources\spr_background.bmp" />
-    <None Include="Resources\spr_fire.png" />
-    <None Include="Resources\spr_mario.png" />
-    <None Include="Resources\background.png" />
-    <None Include="Resources\spr_background.png" />
     <None Include="Resources\sprBlueMushroom.png" />
     <None Include="Resources\sprFinalMonster.png" />
     <None Include="Resources\sprFire.png" />
@@ -136,7 +125,6 @@
     <None Include="Resources\sprThorn.png" />
     <None Include="Resources\sprWall.png" />
     <None Include="Resources\sprBackground.png" />
-    <Content Include="Resources\spr_monster.gif" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

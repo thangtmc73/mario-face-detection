@@ -39,13 +39,10 @@ namespace Mario
 		{
 			normalMonster = new NormalMonster("normalMonster", new Point(571, 188));
 			Manager.SpriteManager.Instance.GetSpriteWithName("normalMonster").SetContainer(this);
-			//Manager.SpriteManager.Instance.GetSpriteWithName("normalMonster").AddImageToContainer();
 			thorn = new Thorn("thorn", new Point(219, 188));
 			Manager.SpriteManager.Instance.GetSpriteWithName("thorn").SetContainer(this);
-			//Manager.SpriteManager.Instance.GetSpriteWithName("thorn").AddImageToContainer();
 			finalMonster = new FinalMonster("finalMonster", new Point(1091, 130));
 			Manager.SpriteManager.Instance.GetSpriteWithName("finalMonster").SetContainer(this);
-			//Manager.SpriteManager.Instance.GetSpriteWithName("finalMonster").AddImageToContainer();
 		}
 	}
 }
