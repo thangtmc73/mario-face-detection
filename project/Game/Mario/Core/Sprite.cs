@@ -48,6 +48,7 @@ namespace Core
 			{
 				_parent.Controls.Remove(ImageSpr);
 			}
+            ImageSpr = null;
 		}
 		public string Name { get; set; }
 		public System.Windows.Forms.PictureBox ImageSpr { get; set; }

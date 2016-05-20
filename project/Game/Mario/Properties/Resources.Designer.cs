@@ -113,6 +113,16 @@ namespace Mario.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap sprMarioSoldier {
+            get {
+                object obj = ResourceManager.GetObject("sprMarioSoldier", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap sprNormalMonster {
             get {
                 object obj = ResourceManager.GetObject("sprNormalMonster", resourceCulture);

@@ -16,6 +16,8 @@ namespace Mario
 		private NormalMonster normalMonster;
 		private FinalMonster finalMonster;
 		private Thorn thorn;
+        private Mario.GameObjects.Mario mario;
+
 		public System.Windows.Forms.PictureBox GetPictureBoxWithName(string name)
 		{
 			return (System.Windows.Forms.PictureBox)this.Controls.Find(name, true).FirstOrDefault();
@@ -24,6 +26,27 @@ namespace Mario
 		{
 			InitializeComponent();
 			timer1.Start();
+            tmrMario.Start();
+            lblGameOver.Visible = false;
+
+            //khai báo các đối tượng 
+            normalMonster = new NormalMonster("normalMonster", new Point(571, 188));
+            Manager.SpriteManager.Instance.GetSpriteWithName("normalMonster").SetContainer(this);
+            thorn = new Thorn("thorn", new Point(219, 188));
+            Manager.SpriteManager.Instance.GetSpriteWithName("thorn").SetContainer(this);
+            finalMonster = new FinalMonster("finalMonster", new Point(1091, 130));
+            Manager.SpriteManager.Instance.GetSpriteWithName("finalMonster").SetContainer(this);
+            mario = new Mario.GameObjects.Mario("mario", new Point(12, 177));
+            Manager.SpriteManager.Instance.GetSpriteWithName("mario").SetContainer(this);
+
+            //Nếu Mario chết thì game sẽ dừng lại vào dòng "gameover" sẽ xuất hiện
+            if (mario.Get_life() == 0)
+            {
+                mario.Die();
+                timer1.Stop();
+                tmrMario.Stop();
+                lblGameOver.Visible = true;
+            }
 		}
 
 		private void timer1_Tick(object sender, EventArgs e)
@@ -32,20 +55,49 @@ namespace Mario
 			normalMonster.Move();
 			finalMonster.UpdateState();
 			finalMonster.Move();
-			//Manager.SpriteManager.Instance.Remove("normalMonster");
 		}
 
 		private void MainForm_Load(object sender, EventArgs e)
 		{
-			normalMonster = new NormalMonster("normalMonster", new Point(571, 188));
-			Manager.SpriteManager.Instance.GetSpriteWithName("normalMonster").SetContainer(this);
-			//Manager.SpriteManager.Instance.GetSpriteWithName("normalMonster").AddImageToContainer();
-			thorn = new Thorn("thorn", new Point(219, 188));
-			Manager.SpriteManager.Instance.GetSpriteWithName("thorn").SetContainer(this);
-			//Manager.SpriteManager.Instance.GetSpriteWithName("thorn").AddImageToContainer();
-			finalMonster = new FinalMonster("finalMonster", new Point(1091, 130));
-			Manager.SpriteManager.Instance.GetSpriteWithName("finalMonster").SetContainer(this);
-			//Manager.SpriteManager.Instance.GetSpriteWithName("finalMonster").AddImageToContainer();
-		}
-	}
+			
+        }
+
+        private void tmrMario_Tick(object sender, EventArgs e)
+        {
+            mario.Move();
+            mario.Change("Monster");
+        }
+
+        private void MainForm_KeyUp(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Left:
+                    mario._left = false;
+                    break;
+                case Keys.Right:
+                    mario._right = false;
+                    break;
+                case Keys.Up:
+                    mario._jump = false;
+                    break;
+            }
+        }
+
+        private void MainForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Left:
+                    mario._left = true;
+                    break;
+                case Keys.Right:
+                    mario._right = true;
+                    break;
+                case Keys.Up:
+                    mario._jump = true;
+                    break;
+            }
+        }
+    }
 }
