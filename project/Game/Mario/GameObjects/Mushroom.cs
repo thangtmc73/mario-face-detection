@@ -8,6 +8,8 @@ namespace Mario.GameObjects
 {
 	class Mushroom : BaseObject
 	{
+		public int _type;
+
 		public Mushroom(string a_name, System.Drawing.Point a_pos) : base(a_name)
 		{
 			//_sprite.ImageSpr.Image = global::Mario.Properties.Resources.;

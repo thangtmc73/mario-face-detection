@@ -117,41 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="background_new" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\background_new.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="sprBlueMushroom" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\sprBlueMushroom.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="sprFinalMonster" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\sprFinalMonster.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="sprFire" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\sprFire.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="sprMario" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\sprMario.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="sprMarioSoldier" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\sprMarioSoldier.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="sprMarioSoldier_Inverse" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\sprMarioSoldier_Inverse.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="sprMario_Inverse" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\sprMario_Inverse.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="sprNormalMonster" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\sprNormalMonster.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="sprNormalMonster_Inverse" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\sprNormalMonster_Inverse.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="sprRedMushroom" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\sprRedMushroom.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="sprThorn" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\sprThorn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
+  <metadata name="tmrWebcam.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
 </root>

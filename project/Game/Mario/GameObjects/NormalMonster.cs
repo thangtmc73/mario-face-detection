@@ -14,7 +14,7 @@ namespace Mario.GameObjects
 		}
 		public override void UpdateState()
 		{
-			System.Drawing.Point p= new System.Drawing.Point(0, 0);
+			System.Drawing.Point p = new System.Drawing.Point(0, 0);
 			if (_sprite != null)
 			{
 				p = _sprite.Position;
@@ -22,11 +22,13 @@ namespace Mario.GameObjects
 			if (State == 0 && p.X <= _defaultPos.X - 100)
 			{
 				State = 1;
+				_sprite.ImageSpr.Image = global::Mario.Properties.Resources.sprNormalMonster_Inverse;
 				return;
 			}
 			if (State == 1 && p.X >= _defaultPos.X + 100)
 			{
 				State = 0;
+				_sprite.ImageSpr.Image = global::Mario.Properties.Resources.sprNormalMonster;
 				return;
 			}
 		}

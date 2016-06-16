@@ -63,9 +63,9 @@ namespace Mario.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap sprBackground {
+        internal static System.Drawing.Bitmap background_new {
             get {
-                object obj = ResourceManager.GetObject("sprBackground", resourceCulture);
+                object obj = ResourceManager.GetObject("background_new", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -113,6 +113,36 @@ namespace Mario.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap sprMario_Inverse {
+            get {
+                object obj = ResourceManager.GetObject("sprMario_Inverse", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap sprMarioSoldier {
+            get {
+                object obj = ResourceManager.GetObject("sprMarioSoldier", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap sprMarioSoldier_Inverse {
+            get {
+                object obj = ResourceManager.GetObject("sprMarioSoldier_Inverse", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap sprNormalMonster {
             get {
                 object obj = ResourceManager.GetObject("sprNormalMonster", resourceCulture);
@@ -123,9 +153,9 @@ namespace Mario.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap sprPalace {
+        internal static System.Drawing.Bitmap sprNormalMonster_Inverse {
             get {
-                object obj = ResourceManager.GetObject("sprPalace", resourceCulture);
+                object obj = ResourceManager.GetObject("sprNormalMonster_Inverse", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -146,16 +176,6 @@ namespace Mario.Properties {
         internal static System.Drawing.Bitmap sprThorn {
             get {
                 object obj = ResourceManager.GetObject("sprThorn", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap sprWall {
-            get {
-                object obj = ResourceManager.GetObject("sprWall", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

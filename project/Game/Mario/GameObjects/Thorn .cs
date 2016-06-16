@@ -13,6 +13,6 @@ namespace Mario.GameObjects
 			_sprite.ImageSpr.Image = global::Mario.Properties.Resources.sprThorn;
 			_sprite.Position = a_pos;
 		}
-	public override void Move() { }
+		public override void Move() { }
 	}
 }
