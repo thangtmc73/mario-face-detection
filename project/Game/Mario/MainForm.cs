@@ -86,6 +86,7 @@ namespace Mario
 			Manager.SpriteManager.Instance.GetSpriteWithName("blueMushroom").SetContainer(this.pnlMainGame);
 			lblLife.Text = "Life: " + mario.Life.ToString();
 			_player.controls.play();
+			txtHistoryStates.MaxLength = 6000;
 		}
 
 		private void tmrMario_Tick(object sender, EventArgs e)
@@ -128,7 +129,7 @@ namespace Mario
 			{
 				mario.CollideThorn(thorn);
 			}
-			if (mario._sprite.Position.X > 410 && mario._sprite.Position.X < 690)
+			if (mario._sprite.Position.X > 410 && mario._sprite.Position.X < 800)
 			{
 				mario.CollideMonster(normalMonster);
 			}
@@ -137,7 +138,7 @@ namespace Mario
 				mario.CollideMonster(finalMonster);
 				mario.CollideMonster(finalMonster2);
 			}
-			if (mario._sprite.Position.X > 391 && mario._sprite.Position.X < 800)
+			if (mario._sprite.Position.X > 391 && mario._sprite.Position.X < 850)
 			{
 				mario.CollideMushroom(redMushroom);
 				mario.CollideMushroom(blueMushroom);
@@ -150,10 +151,6 @@ namespace Mario
 			//Hết mạng
 			if (mario.Life == 0)
 			{
-				mario.Die();
-				gameOverSound.Play();
-				tmrMario.Stop();
-				lblGameOver.Visible = true;
 				if (txtHistoryStates.Text.Length >= txtHistoryStates.MaxLength)
 				{
 					txtHistoryStates.Clear();
@@ -161,15 +158,17 @@ namespace Mario
 				txtHistoryStates.Text += "Game Over";
 				txtHistoryStates.SelectionStart = txtHistoryStates.Text.Length;
 				txtHistoryStates.ScrollToCaret();
+				mario.Die();
+				gameOverSound.Play();
+				tmrMario.Stop();
+				lblGameOver.Visible = true;
 			}
 
 			//về đích
 			else
 			{
-				if (mario._sprite.ImageSpr.Location.X >= 1322)
+				if (mario._sprite.ImageSpr.Location.X >= 1320)
 				{
-					tmrMario.Stop();
-					lblWin.Visible = true;
 					if (txtHistoryStates.Text.Length >= txtHistoryStates.MaxLength)
 					{
 						txtHistoryStates.Clear();
@@ -177,8 +176,10 @@ namespace Mario
 					txtHistoryStates.Text += "You Win";
 					txtHistoryStates.SelectionStart = txtHistoryStates.Text.Length;
 					txtHistoryStates.ScrollToCaret();
+					lblWin.Visible = true;
 					mapClearSound.Play();
 					_player.controls.stop();
+					tmrMario.Stop();
 				}
 			}
 			if (_flagFire)
@@ -200,7 +201,7 @@ namespace Mario
 				//Hủy nếu ra khỏi màn hình
 				if (temp_sprite != null)
 				{
-					if (temp_sprite.Position.X >= this.Width || temp_sprite.Position.X < -5)
+					if (temp_sprite.Position.X >= this.Width + 10 || temp_sprite.Position.X < -10)
 					{
 						Manager.SpriteManager.Instance.RemoveWithName(_availableFire[i].Name);
 						_availableFire.Remove(_availableFire[i]);
@@ -211,9 +212,12 @@ namespace Mario
 						_availableFire[i].Move();
 
 						//Kiểm tra va chạm của đạn với các monsters
-						_availableFire[i].CollideMonster(normalMonster);
-						_availableFire[i].CollideMonster(finalMonster);
-						_availableFire[i].CollideMonster(finalMonster2);
+						if (_availableFire[i]._sprite.Position.X > 400 && _availableFire[i]._sprite.Position.X < 1250)
+						{
+							_availableFire[i].CollideMonster(normalMonster);
+							_availableFire[i].CollideMonster(finalMonster);
+							_availableFire[i].CollideMonster(finalMonster2);
+						}
 					}
 				}
 			}
