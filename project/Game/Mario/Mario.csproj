@@ -136,7 +136,6 @@
     <None Include="Resources\sprRedMushroom.png" />
     <None Include="Resources\sprThorn.png" />
     <None Include="Resources\sprWall.png" />
-    <None Include="Resources\sprBackground.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\sprFinalMonster.gif" />

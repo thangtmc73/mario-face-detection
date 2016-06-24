@@ -64,9 +64,13 @@ namespace Mario.GameObjects
 		}
 		public void MoveLeft()
 		{
-			_sprite.Position = new System.Drawing.Point(_sprite.Position.X - 5, _sprite.Position.Y);
 			Direct = Direction.stay;
 			Moving = false;
+			if (_sprite.Position.X < -10)
+			{
+				return;
+			}		
+			_sprite.Position = new System.Drawing.Point(_sprite.Position.X - 5, _sprite.Position.Y);
 		}
 		public void Jump()
 		{
@@ -97,7 +101,7 @@ namespace Mario.GameObjects
 				StringCurrentState = "jump";
 			}
 			_sprite.Position = new System.Drawing.Point(x, y);
-			if (_sprite.Position.Y < 70 && Jumping == 1)
+			if (_sprite.Position.Y < 100 && Jumping == 1)
 			{
 				Jumping = 2;
 			}
@@ -111,6 +115,10 @@ namespace Mario.GameObjects
 		//=======================CHANGING FUNCTIONS=======================
 		public void ChangeSoldier(Direction a_direction)
 		{
+			if (Life != 2)
+			{
+				return;
+			}
 			if (a_direction == Direction.right)
 			{
 				_sprite.ImageSpr.Image = global::Mario.Properties.Resources.sprMarioSoldier;
@@ -122,6 +130,10 @@ namespace Mario.GameObjects
 		}
 		public void ChangeNormal(Direction a_direction)
 		{
+			if (Life != 1)
+			{
+				return;
+			}
 			if (a_direction == Direction.right)
 			{
 				_sprite.ImageSpr.Image = global::Mario.Properties.Resources.sprMario;

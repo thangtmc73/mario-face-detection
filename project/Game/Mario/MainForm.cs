@@ -56,7 +56,6 @@ namespace Mario
 			_player = new WMPLib.WindowsMediaPlayer();
 			_player.URL = "MainTheme.mp3";
 			_timeBetweenTwoFire = 0;
-
 			_flagFire = false;
 			this.KeyPreview = true;
 			tmrMario.Start();
@@ -65,12 +64,11 @@ namespace Mario
 			lblWin.Visible = false;
 			txtHistoryStates.Text = "";
 			txtCurrentState.Text = "";
-			this.Focus();
 		}
 
 		private void MainForm_Load(object sender, EventArgs e)
 		{
-			_controller = new Point();
+			_controller = new Point(330, 270);
 			imgbFace.Image = _capture.QueryFrame();
 			normalMonster = new NormalMonster("normalMonster", new Point(571, 222));
 			Manager.SpriteManager.Instance.GetSpriteWithName("normalMonster").SetContainer(this.pnlMainGame);
@@ -86,12 +84,13 @@ namespace Mario
 			Manager.SpriteManager.Instance.GetSpriteWithName("redMushroom").SetContainer(this.pnlMainGame);
 			blueMushroom = new BlueMushroom("blueMushroom", new Point(700, 218));
 			Manager.SpriteManager.Instance.GetSpriteWithName("blueMushroom").SetContainer(this.pnlMainGame);
+			lblLife.Text = "Life: " + mario.Life.ToString();
 			_player.controls.play();
 		}
 
 		private void tmrMario_Tick(object sender, EventArgs e)
 		{
-			updateController();
+			UpdateController();
 			using (var imageFrame = _capture.QueryFrame().ToImage<Bgr, Byte>())
 			{
 				if (imageFrame != null)
@@ -121,14 +120,21 @@ namespace Mario
 			finalMonster2.Move();
 
 
+			int mario_life = mario.Life;
+
 			mario.Move();
-			updateCurrentState();
+			UpdateCurrentState();
 			mario.CollideThorn(thorn);
 			mario.CollideMonster(normalMonster);
 			mario.CollideMonster(finalMonster);
 			mario.CollideMonster(finalMonster2);
 			mario.CollideMushroom(redMushroom);
 			mario.CollideMushroom(blueMushroom);
+
+			if (mario_life != mario.Life)
+			{
+				lblLife.Text = "Life: " + mario.Life.ToString();
+			}
 			//Hết mạng
 			if (mario.Life == 0)
 			{
@@ -141,6 +147,8 @@ namespace Mario
 					txtHistoryStates.Clear();
 				}
 				txtHistoryStates.Text += "Game Over";
+				txtHistoryStates.SelectionStart = txtHistoryStates.Text.Length;
+				txtHistoryStates.ScrollToCaret();
 			}
 
 			//về đích
@@ -154,14 +162,16 @@ namespace Mario
 					{
 						txtHistoryStates.Clear();
 					}
-					txtHistoryStates.Text += "You win";
+					txtHistoryStates.Text += "You Win";
+					txtHistoryStates.SelectionStart = txtHistoryStates.Text.Length;
+					txtHistoryStates.ScrollToCaret();
 					mapClearSound.Play();
 					_player.controls.stop();
 				}
 			}
 			if (_flagFire)
 			{
-				_timeBetweenTwoFire = (_timeBetweenTwoFire + 1) % 40;
+				_timeBetweenTwoFire = (_timeBetweenTwoFire + 1) % 10;
 				if (_timeBetweenTwoFire == 0)
 				{
 					_flagFire = false;
@@ -205,7 +215,7 @@ namespace Mario
 			}
 		}
 
-		private void updateController()
+		private void UpdateController()
 		{
 			if (!mario.Moving)
 			{
@@ -223,6 +233,8 @@ namespace Mario
 							_direction_mario = Direction.right;
 						}
 					}
+					mario.ChangeNormal(_direction_mario);
+					mario.ChangeSoldier(_direction_mario);
 					mario.Moving = true;
 				}
 				else if (_controller.X < 220)
@@ -237,6 +249,8 @@ namespace Mario
 						mario.Direct = Direction.left;
 						_direction_mario = Direction.left;
 					}
+					mario.ChangeNormal(_direction_mario);
+					mario.ChangeSoldier(_direction_mario);
 					mario.Moving = true;
 				}
 				if (_controller.Y < 179)
@@ -301,7 +315,7 @@ namespace Mario
 			//	}
 			//}
 		}
-		private void updateCurrentState()
+		private void UpdateCurrentState()
 		{
 			if (txtHistoryStates.Text.Length >= txtHistoryStates.MaxLength)
 			{
@@ -311,40 +325,12 @@ namespace Mario
 			{
 				txtCurrentState.Text = mario.StringCurrentState;
 				txtHistoryStates.Text += txtCurrentState.Text + System.Environment.NewLine;
+				txtHistoryStates.SelectionStart = txtHistoryStates.Text.Length;
+				txtHistoryStates.ScrollToCaret();
 			}
 		}
 		private void MainForm_KeyPress(object sender, KeyPressEventArgs e)
 		{
-			if (!_flagFire)
-			{
-				_timeBetweenTwoFire = 0;
-				_flagFire = true;
-			}
-			else
-			{
-				return;
-			}
-
-			if (_timeBetweenTwoFire == 0)
-			{
-				if (mario.Life == 2)
-				{
-					if (e.KeyChar == (char)Keys.Space)
-					{
-						//Đặt lại vị trí của lửa bay ra đúng vị trí của nồng súng
-						int x = mario._sprite.Position.X + mario._sprite.ImageSpr.Width;
-						int y = mario._sprite.Position.Y + 10;
-
-						_availableFire.Add(new Fire("fire" + _numFire.ToString(), new Point(x, y), _direction_mario));
-						Manager.SpriteManager.Instance.GetSpriteWithName("fire" + _numFire.ToString()).SetContainer(this.pnlMainGame);
-
-						_numFire++;
-						fireSound.Play();
-					}
-				}
-
-			}
-
 			if (e.KeyChar == (char)Keys.Escape)
 			{
 				this.Close();
@@ -354,8 +340,28 @@ namespace Mario
 			{
 				Application.Restart();
 			}
-
-			e.Handled = true;
+			if (!_flagFire)
+			{
+				if (mario.Life == 2)
+				{
+					if (e.KeyChar == (char)Keys.Space)
+					{
+						//Đặt lại vị trí của lửa bay ra đúng vị trí của nồng súng
+						int x = mario._sprite.Position.X + mario._sprite.ImageSpr.Width;
+						int y = mario._sprite.Position.Y + 10;
+						if (_direction_mario == Direction.left)
+						{
+							x -= 20;
+						}
+						_availableFire.Add(new Fire("fire" + _numFire.ToString(), new Point(x, y), _direction_mario));
+						Manager.SpriteManager.Instance.GetSpriteWithName("fire" + _numFire.ToString()).SetContainer(this.pnlMainGame);
+						_flagFire = true;
+						_timeBetweenTwoFire = 0;
+						_numFire++;
+						fireSound.Play();
+					}
+				}
+			}
 		}
 
 	}

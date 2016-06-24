@@ -28,11 +28,11 @@ namespace Mario.GameObjects
 		}
 		public void MoveRight()
 		{
-			_sprite.Position = new System.Drawing.Point(_sprite.Position.X + 5, _sprite.Position.Y);
+			_sprite.Position = new System.Drawing.Point(_sprite.Position.X + 20, _sprite.Position.Y);
 		}
 		public void MoveLeft()
 		{
-			_sprite.Position = new System.Drawing.Point(_sprite.Position.X - 5, _sprite.Position.Y);
+			_sprite.Position = new System.Drawing.Point(_sprite.Position.X - 20, _sprite.Position.Y);
 		}
 
 		public void CollideMonster(Monster a_monster)
