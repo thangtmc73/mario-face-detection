@@ -10,9 +10,10 @@ namespace Mario.GameObjects
 	class Mario : BaseObject
 	{
 		private SoundPlayer eatBlueMushroomSound = new SoundPlayer("smw_1-up.wav");
-
+		public string StringCurrentState { get; set; }
 		public int Life { get; set; }
 		public Direction Direct { get; set; }
+		public bool Moving { get; set; }
 		public bool BlueMushroomEaten { get; set; }
 		public int Jumping { get; set; }
 
@@ -28,19 +29,29 @@ namespace Mario.GameObjects
 			Life = 1;
 			BlueMushroomEaten = false;
 			Jumping = 0;
+			Moving = false;
 		}
 		public override void Move()
 		{
 			//nếu Mario CHƯA ăn nấm Xan
-			if (Jumping == 0 && Direct == Direction.left)
+			if (Jumping == 0)
 			{
-				MoveLeft();
+				if (Direct == Direction.left)
+				{
+					MoveLeft();
+					StringCurrentState = "go to back";
+				}
+				else if (Direct == Direction.right)
+				{
+					MoveRight();
+					StringCurrentState = "go ahead";
+				}
+				else
+				{
+					StringCurrentState = "stay";
+				}
 			}
-			if (Jumping == 0 && Direct == Direction.right)
-			{
-				MoveRight();
-			}
-			if (Jumping != 0)
+			else
 			{
 				Jump();
 			}
@@ -48,10 +59,14 @@ namespace Mario.GameObjects
 		public void MoveRight()
 		{
 			_sprite.Position = new System.Drawing.Point(_sprite.Position.X + 5, _sprite.Position.Y);
+			Direct = Direction.stay;
+			Moving = false;
 		}
 		public void MoveLeft()
 		{
 			_sprite.Position = new System.Drawing.Point(_sprite.Position.X - 5, _sprite.Position.Y);
+			Direct = Direction.stay;
+			Moving = false;
 		}
 		public void Jump()
 		{
@@ -70,17 +85,23 @@ namespace Mario.GameObjects
 			if (Direct == Direction.left)
 			{
 				x -= 5;
+				StringCurrentState = "jump back";
 			}
 			else if (Direct == Direction.right)
 			{
 				x += 5;
+				StringCurrentState = "jump ahead";
+			}
+			else
+			{
+				StringCurrentState = "jump";
 			}
 			_sprite.Position = new System.Drawing.Point(x, y);
 			if (_sprite.Position.Y < 70 && Jumping == 1)
 			{
 				Jumping = 2;
 			}
-			if (_sprite.Position.Y >= 172 && Jumping == 2)
+			if (_sprite.Position.Y >= 202 && Jumping == 2)
 			{
 				Jumping = 0;
 				Direct = Direction.stay;
@@ -159,7 +180,7 @@ namespace Mario.GameObjects
 				if (Life == 1)
 				{
 					ChangeNormal(Direct);
-					this._sprite.ImageSpr.Location = new System.Drawing.Point(12, 177);
+					this._sprite.ImageSpr.Location = new System.Drawing.Point(12, 209);
 				}
 				if (Life == 0)
 				{
@@ -177,7 +198,7 @@ namespace Mario.GameObjects
 				if (Life == 1)
 				{
 					ChangeNormal(Direct);
-					this._sprite.ImageSpr.Location = new System.Drawing.Point(12, 177);
+					this._sprite.ImageSpr.Location = new System.Drawing.Point(12, 207);
 					BlueMushroomEaten = false;
 				}
 				if (Life == 0)

@@ -10,10 +10,18 @@ using System.Windows.Forms;
 using Mario.GameObjects;
 using System.Media;//thu vien de goi SoundPlayer
 using WMPLib; // thu vien de goi WindowsMediaPlayer
+using Emgu.CV;
+using Emgu.Util;
+using Emgu.CV.Structure;
+using Emgu.CV.CvEnum;
+
 namespace Mario
 {
 	public partial class MainForm : Form
 	{
+		private Capture _capture;
+		private CascadeClassifier _cascadeClassifier;
+		Point _controller;
 		//------Khoi tao----- 
 		private WindowsMediaPlayer _player;
 		public SoundPlayer fireSound = new SoundPlayer("smw_fireball.wav");
@@ -37,13 +45,12 @@ namespace Mario
 		private int _numFire = 0;
 		private bool _flagFire;
 
-		public System.Windows.Forms.PictureBox GetPictureBoxWithName(string name)
-		{
-			return (System.Windows.Forms.PictureBox)this.Controls.Find(name, true).FirstOrDefault();
-		}
 		public MainForm()
 		{
 			InitializeComponent();
+
+			_capture = new Capture();
+			_cascadeClassifier = new CascadeClassifier(Application.StartupPath + "\\haarcascade_frontalface_default.xml");
 
 			_availableFire = new System.Collections.Generic.List<Fire>();
 			_player = new WMPLib.WindowsMediaPlayer();
@@ -51,64 +58,89 @@ namespace Mario
 			_timeBetweenTwoFire = 0;
 
 			_flagFire = false;
-
-
-			timer1.Start();
+			this.KeyPreview = true;
 			tmrMario.Start();
 			letaGoSound.Play();
-			tmrFire.Start();
 			lblGameOver.Visible = false;
 			lblWin.Visible = false;
+			txtHistoryStates.Text = "";
+			txtCurrentState.Text = "";
+			this.Focus();
 		}
 
-		private void timer1_Tick(object sender, EventArgs e)
+		private void MainForm_Load(object sender, EventArgs e)
 		{
+			_controller = new Point();
+			imgbFace.Image = _capture.QueryFrame();
+			normalMonster = new NormalMonster("normalMonster", new Point(571, 222));
+			Manager.SpriteManager.Instance.GetSpriteWithName("normalMonster").SetContainer(this.pnlMainGame);
+			thorn = new Thorn("thorn", new Point(219, 220));
+			Manager.SpriteManager.Instance.GetSpriteWithName("thorn").SetContainer(this.pnlMainGame);
+			finalMonster = new FinalMonster("finalMonster", new Point(1091, 160));
+			Manager.SpriteManager.Instance.GetSpriteWithName("finalMonster").SetContainer(this.pnlMainGame);
+			finalMonster2 = new FinalMonster("finalMonster2", new Point(900, 160));
+			Manager.SpriteManager.Instance.GetSpriteWithName("finalMonster2").SetContainer(this.pnlMainGame);
+			mario = new Mario.GameObjects.Mario("mario", new Point(12, 209));
+			Manager.SpriteManager.Instance.GetSpriteWithName("mario").SetContainer(this.pnlMainGame);
+			redMushroom = new RedMushroom("redMushroom", new Point(430, 218));
+			Manager.SpriteManager.Instance.GetSpriteWithName("redMushroom").SetContainer(this.pnlMainGame);
+			blueMushroom = new BlueMushroom("blueMushroom", new Point(700, 218));
+			Manager.SpriteManager.Instance.GetSpriteWithName("blueMushroom").SetContainer(this.pnlMainGame);
+			_player.controls.play();
+		}
+
+		private void tmrMario_Tick(object sender, EventArgs e)
+		{
+			updateController();
+			using (var imageFrame = _capture.QueryFrame().ToImage<Bgr, Byte>())
+			{
+				if (imageFrame != null)
+				{
+					Image<Gray, Byte> grayframe = imageFrame.Convert<Gray, byte>();
+					Rectangle[] faces = _cascadeClassifier.DetectMultiScale(grayframe, 1.1, 10, Size.Empty); //the actual face detection happens here
+					_controller.X = 330;
+					_controller.Y = 270;
+					foreach (Rectangle face in faces)
+					{
+						imageFrame.Draw(face, new Bgr(Color.White), 1);
+						_controller.X = face.X + face.Width / 2;
+						_controller.Y = face.Y + face.Height / 2;
+						break;
+					}
+				}
+
+				imgbFace.Image = imageFrame.Flip(FlipType.Horizontal);
+				//_faces = null;
+			}
+
 			normalMonster.UpdateState();
 			normalMonster.Move();
 			finalMonster.UpdateState();
 			finalMonster.Move();
 			finalMonster2.UpdateState();
 			finalMonster2.Move();
-		}
 
-		private void MainForm_Load(object sender, EventArgs e)
-		{
-			normalMonster = new NormalMonster("normalMonster", new Point(571, 188));
-			Manager.SpriteManager.Instance.GetSpriteWithName("normalMonster").SetContainer(this);
-			thorn = new Thorn("thorn", new Point(219, 188));
-			Manager.SpriteManager.Instance.GetSpriteWithName("thorn").SetContainer(this);
-			finalMonster = new FinalMonster("finalMonster", new Point(1091, 130));
-			Manager.SpriteManager.Instance.GetSpriteWithName("finalMonster").SetContainer(this);
-			finalMonster2 = new FinalMonster("finalMonster2", new Point(900, 130));
-			Manager.SpriteManager.Instance.GetSpriteWithName("finalMonster2").SetContainer(this);
-			mario = new Mario.GameObjects.Mario("mario", new Point(12, 177));
-			Manager.SpriteManager.Instance.GetSpriteWithName("mario").SetContainer(this);
-			redMushroom = new RedMushroom("redMushroom", new Point(430, 184));
-			Manager.SpriteManager.Instance.GetSpriteWithName("redMushroom").SetContainer(this);
-			blueMushroom = new BlueMushroom("blueMushroom", new Point(700, 184));
-			Manager.SpriteManager.Instance.GetSpriteWithName("blueMushroom").SetContainer(this);
-			_player.controls.play();
-		}
 
-		private void tmrMario_Tick(object sender, EventArgs e)
-		{
 			mario.Move();
+			updateCurrentState();
 			mario.CollideThorn(thorn);
 			mario.CollideMonster(normalMonster);
 			mario.CollideMonster(finalMonster);
 			mario.CollideMonster(finalMonster2);
 			mario.CollideMushroom(redMushroom);
 			mario.CollideMushroom(blueMushroom);
-
 			//Hết mạng
 			if (mario.Life == 0)
 			{
 				mario.Die();
 				gameOverSound.Play();
-				timer1.Stop();
 				tmrMario.Stop();
-				tmrFire.Stop();
 				lblGameOver.Visible = true;
+				if (txtHistoryStates.Text.Length >= txtHistoryStates.MaxLength)
+				{
+					txtHistoryStates.Clear();
+				}
+				txtHistoryStates.Text += "Game Over";
 			}
 
 			//về đích
@@ -116,114 +148,17 @@ namespace Mario
 			{
 				if (mario._sprite.ImageSpr.Location.X >= 1322)
 				{
-					timer1.Stop();
 					tmrMario.Stop();
 					lblWin.Visible = true;
+					if (txtHistoryStates.Text.Length >= txtHistoryStates.MaxLength)
+					{
+						txtHistoryStates.Clear();
+					}
+					txtHistoryStates.Text += "You win";
 					mapClearSound.Play();
 					_player.controls.stop();
 				}
 			}
-		}
-
-		private void MainForm_KeyUp(object sender, KeyEventArgs e)
-		{
-			if (mario.Direct != Direction.stay && mario.Jumping == 0)
-			{
-				mario.Direct = Direction.stay;
-			}
-		}
-
-		private void MainForm_KeyDown(object sender, KeyEventArgs e)
-		{
-			switch (e.KeyCode)
-			{
-				case Keys.Left:
-					if (!mario.BlueMushroomEaten)
-					{
-						mario.Direct = Direction.left;
-						_direction_mario = Direction.left;
-					}
-					else
-					{
-						mario.Direct = Direction.right;
-						_direction_mario = Direction.right;
-					}
-					break;
-				case Keys.Right:
-					if (!mario.BlueMushroomEaten)
-					{
-						mario.Direct = Direction.right;
-						_direction_mario = Direction.right;
-					}
-					else
-					{
-						mario.Direct = Direction.left;
-						_direction_mario = Direction.left;
-					}
-					break;
-				case Keys.Up:
-					if (mario.Jumping == 0)
-					{
-						mario.Jumping = 1;
-					}
-					break;
-			}
-			if (mario.Direct != Direction.stay)
-			{
-				if (mario.Life == 2)
-				{
-					mario.ChangeSoldier(_direction_mario);
-				}
-				else
-				{
-					mario.ChangeNormal(_direction_mario);
-				}
-			}
-		}
-
-		private void MainForm_KeyPress(object sender, KeyPressEventArgs e)
-		{
-			if (!_flagFire)
-			{
-				_timeBetweenTwoFire = 0;
-				_flagFire = true;
-			}
-			else
-			{
-				return;
-			}
-
-			if (_timeBetweenTwoFire == 0)
-			{
-				if (mario.Life == 2)
-				{
-					if (e.KeyChar == (char)Keys.Space)
-					{
-						//Đặt lại vị trí của lửa bay ra đúng vị trí của nồng súng
-						int x = mario._sprite.Position.X + mario._sprite.ImageSpr.Width;
-						int y = mario._sprite.Position.Y + 10;
-
-						_availableFire.Add(new Fire("fire" + _numFire.ToString(), new Point(x, y), _direction_mario));
-						Manager.SpriteManager.Instance.GetSpriteWithName("fire" + _numFire.ToString()).SetContainer(this);
-
-						_numFire++;
-						fireSound.Play();
-					}
-				}
-
-			}
-
-			if (e.KeyChar == (char)Keys.Escape)
-			{
-				this.Close();
-
-			}
-			if (e.KeyChar == (char)Keys.Enter)
-				Application.Restart();
-		}
-
-		private void tmrFire_Tick(object sender, EventArgs e)
-		{
 			if (_flagFire)
 			{
 				_timeBetweenTwoFire = (_timeBetweenTwoFire + 1) % 40;
@@ -235,6 +170,7 @@ namespace Mario
 
 			for (int i = 0; i < _availableFire.Count; i++)
 			{
+
 				//tao mot thu muc chua picturebox khac, _available[i].Name : ten cua picturebox[i]
 				Core.Sprite temp_sprite = new Core.Sprite();
 				temp_sprite = Manager.SpriteManager.Instance.GetSpriteWithName(_availableFire[i].Name);
@@ -261,9 +197,166 @@ namespace Mario
 			}
 		}
 
-		public void passRectange(Rectangle a_rect)
+		private void MainForm_KeyUp(object sender, KeyEventArgs e)
 		{
-			//if (a_rect)
+			if (mario.Direct != Direction.stay && mario.Jumping == 0)
+			{
+				mario.Direct = Direction.stay;
+			}
 		}
+
+		private void updateController()
+		{
+			if (!mario.Moving)
+			{
+				if (_controller.X >= 440)
+				{
+					if (!mario.BlueMushroomEaten)
+					{
+						mario.Direct = Direction.left;
+						_direction_mario = Direction.left;
+					}
+					else
+					{
+						{
+							mario.Direct = Direction.right;
+							_direction_mario = Direction.right;
+						}
+					}
+					mario.Moving = true;
+				}
+				else if (_controller.X < 220)
+				{
+					if (!mario.BlueMushroomEaten)
+					{
+						mario.Direct = Direction.right;
+						_direction_mario = Direction.right;
+					}
+					else
+					{
+						mario.Direct = Direction.left;
+						_direction_mario = Direction.left;
+					}
+					mario.Moving = true;
+				}
+				if (_controller.Y < 179)
+				{
+					if (mario.Jumping == 0)
+					{
+						mario.Jumping = 1;
+						mario.Moving = true;
+					}
+				}
+			}
+			else
+			{
+				if (mario.Jumping == 0)
+				{
+					mario.Direct = Direction.stay;
+					mario.Moving = false;
+				}
+			}
+			//switch (e.KeyCode)
+			//{
+			//	case Keys.Left:
+			//		if (!mario.BlueMushroomEaten)
+			//		{
+			//			mario.Direct = Direction.left;
+			//			_direction_mario = Direction.left;
+			//		}
+			//		else
+			//		{
+			//			mario.Direct = Direction.right;
+			//			_direction_mario = Direction.right;
+			//		}
+			//		break;
+			//	case Keys.Right:
+			//		if (!mario.BlueMushroomEaten)
+			//		{
+			//			mario.Direct = Direction.right;
+			//			_direction_mario = Direction.right;
+			//		}
+			//		else
+			//		{
+			//			mario.Direct = Direction.left;
+			//			_direction_mario = Direction.left;
+			//		}
+			//		break;
+			//	case Keys.Up:
+			//		if (mario.Jumping == 0)
+			//		{
+			//			mario.Jumping = 1;
+			//		}
+			//		break;
+			//}
+			//if (mario.Direct != Direction.stay)
+			//{
+			//	if (mario.Life == 2)
+			//	{
+			//		mario.ChangeSoldier(_direction_mario);
+			//	}
+			//	else
+			//	{
+			//		mario.ChangeNormal(_direction_mario);
+			//	}
+			//}
+		}
+		private void updateCurrentState()
+		{
+			if (txtHistoryStates.Text.Length >= txtHistoryStates.MaxLength)
+			{
+				txtHistoryStates.Text = "";
+			}
+			if (txtCurrentState.Text != mario.StringCurrentState)
+			{
+				txtCurrentState.Text = mario.StringCurrentState;
+				txtHistoryStates.Text += txtCurrentState.Text + System.Environment.NewLine;
+			}
+		}
+		private void MainForm_KeyPress(object sender, KeyPressEventArgs e)
+		{
+			if (!_flagFire)
+			{
+				_timeBetweenTwoFire = 0;
+				_flagFire = true;
+			}
+			else
+			{
+				return;
+			}
+
+			if (_timeBetweenTwoFire == 0)
+			{
+				if (mario.Life == 2)
+				{
+					if (e.KeyChar == (char)Keys.Space)
+					{
+						//Đặt lại vị trí của lửa bay ra đúng vị trí của nồng súng
+						int x = mario._sprite.Position.X + mario._sprite.ImageSpr.Width;
+						int y = mario._sprite.Position.Y + 10;
+
+						_availableFire.Add(new Fire("fire" + _numFire.ToString(), new Point(x, y), _direction_mario));
+						Manager.SpriteManager.Instance.GetSpriteWithName("fire" + _numFire.ToString()).SetContainer(this.pnlMainGame);
+
+						_numFire++;
+						fireSound.Play();
+					}
+				}
+
+			}
+
+			if (e.KeyChar == (char)Keys.Escape)
+			{
+				this.Close();
+
+			}
+			if (e.KeyChar == (char)Keys.Enter)
+			{
+				Application.Restart();
+			}
+
+			e.Handled = true;
+		}
+
 	}
 }

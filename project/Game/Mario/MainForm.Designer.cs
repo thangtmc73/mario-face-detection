@@ -29,18 +29,20 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			this.timer1 = new System.Windows.Forms.Timer(this.components);
 			this.tmrMario = new System.Windows.Forms.Timer(this.components);
 			this.lblGameOver = new System.Windows.Forms.Label();
 			this.lblWin = new System.Windows.Forms.Label();
-			this.tmrFire = new System.Windows.Forms.Timer(this.components);
+			this.pnlMainGame = new System.Windows.Forms.Panel();
+			this.imgbFace = new Emgu.CV.UI.ImageBox();
+			this.txtCurrentState = new System.Windows.Forms.TextBox();
+			this.lblTrangThaiHienTai = new System.Windows.Forms.Label();
+			this.label2 = new System.Windows.Forms.Label();
+			this.txtHistoryStates = new System.Windows.Forms.RichTextBox();
+			this.lblThanhVienNhom = new System.Windows.Forms.Label();
+			this.txtDanhSachThanhVien = new System.Windows.Forms.TextBox();
+			this.pnlMainGame.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.imgbFace)).BeginInit();
 			this.SuspendLayout();
-			// 
-			// timer1
-			// 
-			this.timer1.Enabled = true;
-			this.timer1.Interval = 1;
-			this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
 			// 
 			// tmrMario
 			// 
@@ -53,7 +55,7 @@
 			this.lblGameOver.BackColor = System.Drawing.Color.Transparent;
 			this.lblGameOver.Font = new System.Drawing.Font("Modern No. 20", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblGameOver.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-			this.lblGameOver.Location = new System.Drawing.Point(300, 100);
+			this.lblGameOver.Location = new System.Drawing.Point(246, 87);
 			this.lblGameOver.Name = "lblGameOver";
 			this.lblGameOver.Size = new System.Drawing.Size(658, 68);
 			this.lblGameOver.TabIndex = 0;
@@ -66,48 +68,139 @@
 			this.lblWin.BackColor = System.Drawing.Color.Transparent;
 			this.lblWin.Font = new System.Drawing.Font("Modern No. 20", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblWin.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-			this.lblWin.Location = new System.Drawing.Point(282, 100);
+			this.lblWin.Location = new System.Drawing.Point(214, 87);
 			this.lblWin.Name = "lblWin";
 			this.lblWin.Size = new System.Drawing.Size(705, 72);
 			this.lblWin.TabIndex = 1;
 			this.lblWin.Text = "CONGRATULATION ! YOU WIN !\r\nPress Enter to play again ! Press ESC to exit !";
 			this.lblWin.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
-			// tmrFire
+			// pnlMainGame
 			// 
-			this.tmrFire.Enabled = true;
-			this.tmrFire.Interval = 1;
-			this.tmrFire.Tick += new System.EventHandler(this.tmrFire_Tick);
+			this.pnlMainGame.AutoSize = true;
+			this.pnlMainGame.BackgroundImage = global::Mario.Properties.Resources.background_new;
+			this.pnlMainGame.Controls.Add(this.lblWin);
+			this.pnlMainGame.Controls.Add(this.lblGameOver);
+			this.pnlMainGame.Location = new System.Drawing.Point(0, 0);
+			this.pnlMainGame.Name = "pnlMainGame";
+			this.pnlMainGame.Size = new System.Drawing.Size(1352, 262);
+			this.pnlMainGame.TabIndex = 2;
+			// 
+			// imgbFace
+			// 
+			this.imgbFace.Anchor = System.Windows.Forms.AnchorStyles.None;
+			this.imgbFace.Location = new System.Drawing.Point(0, 263);
+			this.imgbFace.Name = "imgbFace";
+			this.imgbFace.Size = new System.Drawing.Size(660, 360);
+			this.imgbFace.TabIndex = 2;
+			this.imgbFace.TabStop = false;
+			// 
+			// txtCurrentState
+			// 
+			this.txtCurrentState.Enabled = false;
+			this.txtCurrentState.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+			this.txtCurrentState.Location = new System.Drawing.Point(742, 292);
+			this.txtCurrentState.Name = "txtCurrentState";
+			this.txtCurrentState.Size = new System.Drawing.Size(158, 29);
+			this.txtCurrentState.TabIndex = 3;
+			// 
+			// lblTrangThaiHienTai
+			// 
+			this.lblTrangThaiHienTai.AutoSize = true;
+			this.lblTrangThaiHienTai.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+			this.lblTrangThaiHienTai.Location = new System.Drawing.Point(741, 265);
+			this.lblTrangThaiHienTai.Name = "lblTrangThaiHienTai";
+			this.lblTrangThaiHienTai.Size = new System.Drawing.Size(159, 24);
+			this.lblTrangThaiHienTai.TabIndex = 4;
+			this.lblTrangThaiHienTai.Text = "Trạng thái hiện tại";
+			// 
+			// label2
+			// 
+			this.label2.AutoSize = true;
+			this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+			this.label2.Location = new System.Drawing.Point(1121, 265);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(151, 24);
+			this.label2.TabIndex = 5;
+			this.label2.Text = "Lịch sử trạng thái";
+			// 
+			// txtHistoryStates
+			// 
+			this.txtHistoryStates.Enabled = false;
+			this.txtHistoryStates.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+			this.txtHistoryStates.Location = new System.Drawing.Point(1040, 293);
+			this.txtHistoryStates.Name = "txtHistoryStates";
+			this.txtHistoryStates.ReadOnly = true;
+			this.txtHistoryStates.Size = new System.Drawing.Size(300, 330);
+			this.txtHistoryStates.TabIndex = 6;
+			this.txtHistoryStates.Text = "";
+			// 
+			// lblThanhVienNhom
+			// 
+			this.lblThanhVienNhom.AutoSize = true;
+			this.lblThanhVienNhom.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+			this.lblThanhVienNhom.Location = new System.Drawing.Point(744, 359);
+			this.lblThanhVienNhom.Name = "lblThanhVienNhom";
+			this.lblThanhVienNhom.Size = new System.Drawing.Size(159, 24);
+			this.lblThanhVienNhom.TabIndex = 7;
+			this.lblThanhVienNhom.Text = "Thành viên nhóm";
+			// 
+			// txtDanhSachThanhVien
+			// 
+			this.txtDanhSachThanhVien.Enabled = false;
+			this.txtDanhSachThanhVien.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+			this.txtDanhSachThanhVien.Location = new System.Drawing.Point(735, 387);
+			this.txtDanhSachThanhVien.Multiline = true;
+			this.txtDanhSachThanhVien.Name = "txtDanhSachThanhVien";
+			this.txtDanhSachThanhVien.Size = new System.Drawing.Size(178, 81);
+			this.txtDanhSachThanhVien.TabIndex = 8;
+			this.txtDanhSachThanhVien.Text = "Trần Lê Trọng Thức\r\nPhan Quang Duy\r\nTrần Minh Thắng";
 			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.BackColor = System.Drawing.Color.Black;
-			this.BackgroundImage = global::Mario.Properties.Resources.background_new;
+			this.AutoSize = true;
+			this.BackColor = System.Drawing.Color.Silver;
 			this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-			this.ClientSize = new System.Drawing.Size(1352, 261);
-			this.Controls.Add(this.lblWin);
-			this.Controls.Add(this.lblGameOver);
+			this.ClientSize = new System.Drawing.Size(1352, 626);
+			this.Controls.Add(this.txtDanhSachThanhVien);
+			this.Controls.Add(this.lblThanhVienNhom);
+			this.Controls.Add(this.txtHistoryStates);
+			this.Controls.Add(this.label2);
+			this.Controls.Add(this.lblTrangThaiHienTai);
+			this.Controls.Add(this.txtCurrentState);
+			this.Controls.Add(this.imgbFace);
+			this.Controls.Add(this.pnlMainGame);
 			this.DoubleBuffered = true;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "MainForm";
+			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.Text = "Mario Face Detection";
+			this.TopMost = true;
 			this.Load += new System.EventHandler(this.MainForm_Load);
-			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
 			this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.MainForm_KeyPress);
 			this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyUp);
+			this.pnlMainGame.ResumeLayout(false);
+			this.pnlMainGame.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.imgbFace)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
 		}
 
 		#endregion
-		private System.Windows.Forms.Timer timer1;
 		private System.Windows.Forms.Timer tmrMario;
 		private System.Windows.Forms.Label lblGameOver;
 		private System.Windows.Forms.Label lblWin;
-		private System.Windows.Forms.Timer tmrFire;
+		private System.Windows.Forms.Panel pnlMainGame;
+		private Emgu.CV.UI.ImageBox imgbFace;
+		private System.Windows.Forms.TextBox txtCurrentState;
+		private System.Windows.Forms.Label lblTrangThaiHienTai;
+		private System.Windows.Forms.Label label2;
+		private System.Windows.Forms.RichTextBox txtHistoryStates;
+		private System.Windows.Forms.Label lblThanhVienNhom;
+		private System.Windows.Forms.TextBox txtDanhSachThanhVien;
 	}
 }

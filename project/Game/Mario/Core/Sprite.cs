@@ -16,7 +16,7 @@ namespace Core
 			ImageSpr.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
 		}
 		
-		public Sprite(System.Windows.Forms.Form a_container, System.Windows.Forms.PictureBox a_picturebox)
+		public Sprite(System.Windows.Forms.Panel a_container, System.Windows.Forms.PictureBox a_picturebox)
 		{
 			_parent = a_container;
 			if (ImageSpr != null)
@@ -28,7 +28,7 @@ namespace Core
 				ImageSpr = new System.Windows.Forms.PictureBox();
 			}
 		}
-		public void SetContainer(System.Windows.Forms.Form a_container)
+		public void SetContainer(System.Windows.Forms.Panel a_container)
 		{
 			if (a_container == null)
 			{
@@ -62,6 +62,6 @@ namespace Core
 				ImageSpr.Location = value;
 			}
 		}
-		private System.Windows.Forms.Form _parent;
+		private System.Windows.Forms.Panel _parent;
 	}
 }
