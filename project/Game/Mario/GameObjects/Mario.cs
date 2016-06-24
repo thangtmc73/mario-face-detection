@@ -58,7 +58,7 @@ namespace Mario.GameObjects
 		}
 		public void MoveRight()
 		{
-			_sprite.Position = new System.Drawing.Point(_sprite.Position.X + 5, _sprite.Position.Y);
+			_sprite.Position = new System.Drawing.Point(_sprite.Position.X + 7, _sprite.Position.Y);
 			Direct = Direction.stay;
 			Moving = false;
 		}
@@ -70,7 +70,7 @@ namespace Mario.GameObjects
 			{
 				return;
 			}		
-			_sprite.Position = new System.Drawing.Point(_sprite.Position.X - 5, _sprite.Position.Y);
+			_sprite.Position = new System.Drawing.Point(_sprite.Position.X - 7, _sprite.Position.Y);
 		}
 		public void Jump()
 		{
@@ -88,12 +88,12 @@ namespace Mario.GameObjects
 
 			if (Direct == Direction.left)
 			{
-				x -= 5;
+				x -= 7;
 				StringCurrentState = "jump back";
 			}
 			else if (Direct == Direction.right)
 			{
-				x += 5;
+				x += 7;
 				StringCurrentState = "jump ahead";
 			}
 			else

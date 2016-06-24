@@ -124,12 +124,24 @@ namespace Mario
 
 			mario.Move();
 			UpdateCurrentState();
-			mario.CollideThorn(thorn);
-			mario.CollideMonster(normalMonster);
-			mario.CollideMonster(finalMonster);
-			mario.CollideMonster(finalMonster2);
-			mario.CollideMushroom(redMushroom);
-			mario.CollideMushroom(blueMushroom);
+			if (mario._sprite.Position.X > 180 && mario._sprite.Position.X < 241)
+			{
+				mario.CollideThorn(thorn);
+			}
+			if (mario._sprite.Position.X > 410 && mario._sprite.Position.X < 690)
+			{
+				mario.CollideMonster(normalMonster);
+			}
+			if (mario._sprite.Position.X > 861 && mario._sprite.Position.X < 1250)
+			{
+				mario.CollideMonster(finalMonster);
+				mario.CollideMonster(finalMonster2);
+			}
+			if (mario._sprite.Position.X > 391 && mario._sprite.Position.X < 800)
+			{
+				mario.CollideMushroom(redMushroom);
+				mario.CollideMushroom(blueMushroom);
+			}
 
 			if (mario_life != mario.Life)
 			{
@@ -207,14 +219,6 @@ namespace Mario
 			}
 		}
 
-		private void MainForm_KeyUp(object sender, KeyEventArgs e)
-		{
-			if (mario.Direct != Direction.stay && mario.Jumping == 0)
-			{
-				mario.Direct = Direction.stay;
-			}
-		}
-
 		private void UpdateController()
 		{
 			if (!mario.Moving)
@@ -270,50 +274,6 @@ namespace Mario
 					mario.Moving = false;
 				}
 			}
-			//switch (e.KeyCode)
-			//{
-			//	case Keys.Left:
-			//		if (!mario.BlueMushroomEaten)
-			//		{
-			//			mario.Direct = Direction.left;
-			//			_direction_mario = Direction.left;
-			//		}
-			//		else
-			//		{
-			//			mario.Direct = Direction.right;
-			//			_direction_mario = Direction.right;
-			//		}
-			//		break;
-			//	case Keys.Right:
-			//		if (!mario.BlueMushroomEaten)
-			//		{
-			//			mario.Direct = Direction.right;
-			//			_direction_mario = Direction.right;
-			//		}
-			//		else
-			//		{
-			//			mario.Direct = Direction.left;
-			//			_direction_mario = Direction.left;
-			//		}
-			//		break;
-			//	case Keys.Up:
-			//		if (mario.Jumping == 0)
-			//		{
-			//			mario.Jumping = 1;
-			//		}
-			//		break;
-			//}
-			//if (mario.Direct != Direction.stay)
-			//{
-			//	if (mario.Life == 2)
-			//	{
-			//		mario.ChangeSoldier(_direction_mario);
-			//	}
-			//	else
-			//	{
-			//		mario.ChangeNormal(_direction_mario);
-			//	}
-			//}
 		}
 		private void UpdateCurrentState()
 		{
@@ -363,6 +323,5 @@ namespace Mario
 				}
 			}
 		}
-
 	}
 }

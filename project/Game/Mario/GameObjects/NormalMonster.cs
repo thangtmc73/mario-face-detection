@@ -38,10 +38,10 @@ namespace Mario.GameObjects
 			switch (State)
 			{
 				case 0:
-					x = x - 2;
+					x = x - 4;
 					break;
 				case 1:
-					x = x + 2;
+					x = x + 4;
 					break;
 			}
 			_sprite.Position = new System.Drawing.Point(x, _sprite.Position.Y);

@@ -35,10 +35,10 @@ namespace Mario.GameObjects
 			switch (State)
 			{
 				case 0:
-					y = y - 2;
+					y = y - 8;
 					break;
 				case 1:
-					y = y + 2;
+					y = y + 8;
 					break;
 			}
 			Manager.SpriteManager.Instance.GetSpriteWithName(_sprite.Name).Position = new System.Drawing.Point(pic.Location.X, y);

@@ -195,7 +195,6 @@
 			this.TopMost = true;
 			this.Load += new System.EventHandler(this.MainForm_Load);
 			this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.MainForm_KeyPress);
-			this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyUp);
 			((System.ComponentModel.ISupportInitialize)(this.imgbFace)).EndInit();
 			this.pnlMainGame.ResumeLayout(false);
 			this.pnlMainGame.PerformLayout();
